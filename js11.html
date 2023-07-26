@@ -1,0 +1,26 @@
+<script>
+    /*
+    var x = 10;
+    //x = x++;
+    x = ++100;
+    document.write("x : "+x);
+   */
+  var a = 10;
+  var b = 20;
+  var c = 30;
+  var d = 40;
+  var result  = (a > b) && (++c<d) || (++a < b);
+  /*
+      result = (a < b) && (++c<d)
+               10 < 20
+                 true && (++c < d)
+                 true &&  31 < 40
+                 true && true
+                     true
+  */
+  document.write("<br>a : "+a);
+  document.write("<br>b : "+b);
+  document.write("<br>c : "+c);
+  document.write("<br>d : "+d);
+  document.write("<br>result : "+result);
+</script>

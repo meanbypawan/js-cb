@@ -1,0 +1,16 @@
+<script>
+    var x=5,y;
+    //y = ++x + x++ + ++x;
+    y = ++x - x-- * ++x / x-- - --x;
+    //    6 - 6   *   6 / 6   - 4
+    //    6 - 36 / 6 - 4 
+    //    6 - 6 - 4
+    // 0 - 4
+    // -4  
+    /*
+      x = 4
+      y = -4
+    */
+    document.write("<br/>x : "+x);
+    document.write("<br/>y : "+y);
+</script>

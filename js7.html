@@ -1,0 +1,15 @@
+<script>
+    var a,b,c,d;
+    a = b = c = d = 10;
+    //var result = a == b == c == d;
+    var result = (a == b) == (c == d);
+    /*           a == b
+                 10 == 10
+                    true == c
+                    true == 10
+                       false == d
+                       false == 10
+                          false
+    */
+    document.write(result);
+</script>
