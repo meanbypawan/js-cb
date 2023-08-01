@@ -1,0 +1,38 @@
+<script>
+    var arr = [10,20,30,40,50];
+    /*
+    for(var index in arr)
+      document.write(index+" : "+arr[index]+"<br/>");
+    */
+   /*
+   for(var element of arr)
+     document.write(element+"<br/>");
+   */
+   document.write(arr);
+   arr.push(1000);
+   document.write("<br> After Push : "+arr);
+   arr.pop();
+   document.write("<br> After pop : "+arr);
+
+   arr.unshift(5000);
+   document.write("<br/> After Unsift : "+arr);
+
+   arr.shift();
+   document.write("<br/> After Shift : "+arr);
+   
+   // Add flavour
+   arr.splice(2,0,"hello","World");
+   document.write("<br/> After Splice add : "+arr);
+  
+   // Remove Flavour
+   arr.splice(2,1);
+   document.write("<br/> After Splice remove : "+arr);
+   
+   // add and remove flavoru
+   arr.splice(2,1,"Code Better",true,4000);
+   document.write("<br/> After Splice add and remove : "+arr);
+
+   delete arr[2];
+   document.write("<br/> After Delete : "+arr);
+   
+</script>
