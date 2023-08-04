@@ -1,0 +1,13 @@
+<script>
+    var customerList = [
+        {id:100, cname: 'Shivam', age: 23},
+        {id:101, cname:'Ashutosh', age: 24},
+        {id:102, cname:'Pranjal',age:21}
+    ];
+    
+    document.write(customerList[0]+"<br/>");
+    for( var customer of customerList){
+        if(customer.cname == "Ashutosh")
+        document.write(customer.id+"  "+customer.cname+" "+customer.age+"<br/>");
+    }
+</script>

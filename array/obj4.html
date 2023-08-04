@@ -1,0 +1,21 @@
+<script>
+    var product = {id:100, price:5000, cname:"ABC"};
+    //var copy = product;
+    //var copy = {...product};
+    var copy = product;
+    delete product.price;
+
+    document.write(`Id : ${copy.id} <br/> Price: ${copy.price} <br/> Name : ${copy.cname}`);
+ 
+    /*
+    product.brand = "ABC-Brand";
+
+    
+    document.write(`Id : ${product.id} <br/> Price: ${product.price} <br/> Name : ${product.cname} <br/> Brand : ${product.brand}`);
+
+    delete product.price;
+    //delete product.price;
+    document.write(`Id : ${product.id} <br/> Price: ${product.price} <br/> Name : ${product.cname} <br/> Brand : ${product.brand}`);
+    */
+    
+</script>

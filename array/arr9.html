@@ -1,0 +1,16 @@
+<script>
+    var x = [[111],[222],[333]];
+    for(var i=0; i<x.length; i++){
+        for(var j=0; j<3; j++){
+           var item  =  prompt("Enter "+(j+1)+" element of "+(i+1)+" row");
+           //x[i].push(item);
+           x[i].splice(j,0,item);
+        }
+    }
+    //document.write(x);
+    for(var row of x){
+        for (var element of row)
+          document.writeln(element);
+        document.write("<br/>");  
+    }
+</script>
