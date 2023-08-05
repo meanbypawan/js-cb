@@ -1,0 +1,21 @@
+<script>
+    var data = {
+        customerList:[
+            {
+                "id": 100,
+                "cname": "ABC"
+            },
+            {
+                "id": 101,
+                "cname": "XYZ"
+            },
+            {
+                "id": 102,
+                "cname": "PQR"
+            }
+        ]
+    }
+    var customerList = data.customerList;
+    for(var customer of customerList)
+      document.write(customer.id+" "+customer.cname+"<br/>");
+</script>
