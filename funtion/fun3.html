@@ -1,0 +1,17 @@
+<script>
+    document.write("<br/>Script Started...");
+    function f1(){
+        document.write("<br/>F1-executed....");
+    }
+    function f2(){
+        f3();
+        document.write("<br/>F2-executed...");
+    }
+    function f3(){
+        document.write("<br/>F3-executed....");
+        f1();
+    }
+
+    f2();
+    document.write("<br/>Script End...");
+</script>
