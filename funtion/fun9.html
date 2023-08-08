@@ -1,0 +1,22 @@
+<script>
+    // callback function
+    // Error callback
+    // DOM
+    // callback Hell
+    /*
+      Callback function is a function which is passed as a argument
+      to another function.
+    */
+    function f1(callback1,callback2){// a = function(){}
+        document.write("<br/> f1-executed...");
+        //document.write("<br/>a : "+a);
+        callback1();
+        callback2();
+    }
+
+    f1(function(){
+        document.write("<br/>First Callback is executed....");
+    },function(){
+        document.write("<br/>Second callback is executed...");
+    });
+</script>

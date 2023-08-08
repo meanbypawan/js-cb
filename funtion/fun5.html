@@ -1,0 +1,18 @@
+<script>
+    function f1(){
+        document.write("<br/> F1- is executed...");
+    }
+
+    var f2 = function(a,b){
+      document.write("<br/> a : "+a);
+      document.write("<br/>b : "+b);
+      document.write("<br/> F2-excuted...");
+    }
+    
+    var f3 = ()=>{
+        document.write("<br/> F3 excuted....");
+    }
+    f1();
+    f2(20,10);
+    f3();
+</script>

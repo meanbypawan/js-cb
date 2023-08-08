@@ -1,0 +1,28 @@
+<script>
+    /*
+      Addition: 
+        properties : a,b
+        Behaviour : add
+    */
+  /*
+  */
+   function Addition(x,y){
+      this.a = x;
+      this.b = y;
+      this.add = function(){
+        document.write("<br/>Addition : "+(this.a+this.b));
+      }
+      this.sub = function(){
+        document.write("<br/>Subtraction : "+(this.a - this.b));
+        wish();
+      }
+      var wish = function(){
+         document.write("<br/>Wow Javascript <br/>")     
+      }
+   }
+
+   var obj = new Addition(20,10); // obj--> a=20,b=10
+   obj.add();
+   obj.sub();
+   //obj.wish();
+</script>

@@ -1,0 +1,20 @@
+<script>
+    // this refer the current object
+    function Message(){
+      this.m1 = function(){
+        document.write("<br/>GM....");
+      }
+      this.m2 = function(){
+        document.write("<br/>GE....");
+      }
+      this.m3 = function(){
+        document.write("<br/>GN....");
+      }
+    }
+
+    var message = new Message();
+    message.m1();
+    message.m2();
+    message.m3();
+    var message2 = new Message();
+</script>
