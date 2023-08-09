@@ -1,0 +1,17 @@
+<script>
+    /*
+      Error callback :-  Error callback is callback function
+      whose first argument is of error type
+    */
+
+   var addition = (a,b,callback)=>{
+    if(typeof(a)!="number" || typeof(b)!="number")
+      callback(new Error("Value is not number"));
+    else
+      callback(null,a+b);
+   }
+
+   addition(20,"10",(err,result)=>{
+     err ? document.write(err) : document.write(result);
+   });
+</script>

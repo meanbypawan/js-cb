@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <center>
+            <img id="main" src="flower1.jpg" width="300px" height="300px"/>
+            <br/><br/>
+            <img onclick="swapImage(this)" id="first" src="flower2.jpg" width="100px" height="100px"/>&nbsp;&nbsp;&nbsp;
+            <img onclick="swapImage(this)" id="second" src="flower3.jpg" width="100px" height="100px"/>&nbsp;&nbsp;&nbsp;
+            <img onclick="swapImage(this)" id="third" src="flower4.jpg" width="100px" height="100px"/>&nbsp;&nbsp;&nbsp;
+        </center>
+        <script>
+            function swapImage(currentImageObject){
+                var mainImage = document.getElementById("main");
+                var temp = mainImage.src;
+                mainImage.src = currentImageObject.src;
+                currentImageObject.src = temp;
+            }
+        </script>
+    </body>
+</html>
