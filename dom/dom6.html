@@ -10,19 +10,44 @@
         <form>
             <div class="form-group">
                 <label>Username</label>
-                <input onkeyup="validateUsername()" id="username" type="text" class="form-control"/>
+                <input placeholder="Enter username" onkeyup="validateUsername()" id="username" type="text"
+                    class="form-control" />
                 <small id="usernameError"></small>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input onkeyup="validatePassword()" id="password" type="password" class="form-control"/>
+                <input onkeyup="validatePassword()" id="password" type="password" class="form-control" />
                 <small id="passwordError"></small>
-                <small onclick="showHide(this)" id="showHide" style="color:blue;font-size: 15px; padding-left: 10px; cursor: pointer;">Show</small>
+                <small onclick="showHide(this)" id="showHide"
+                    style="color:blue;font-size: 15px; padding-left: 10px; cursor: pointer;">Show</small>
             </div>
             <div class="form-group">
                 <label>Mobile</label>
-                <input type="text" onkeyup="validateMobile()" id="mobile" class="form-control"/>
+                <input type="text" onkeyup="validateMobile()" id="mobile" class="form-control" />
                 <small id="mobileError"></small>
+            </div>
+            <div class="form-group">
+                <label>Qualification</label>
+                <select onchange="validateQualification()" id="qualification" class="form-control">
+                    <option value="0">select qualification</option>
+                    <option value="1">BCA</option>
+                    <option value="2">MCA</option>
+                    <option value="3">B.Tech</option>
+                    <option value="4">M.Tech</option>
+                    <option value="5">Other</option>
+                </select>
+                <small id="qualificationError"></small>
+            </div>
+            <div class="form-group">
+                <label>Gender</label><br />
+                Male<input type="radio" id="rdMale" name="gender" onchange="validateGender()" />
+                Female<input type="radio" id="rdFemale" name="gender" onchange="validateGender()" />
+                <small id="genderError"></small>
+            </div>
+            <div class="form-group">
+                <label>Upload</label>
+                <input onchange="validateProfile()" type="file" id="profilePic" class="form-control" />
+                <small id="profileError"></small>
             </div>
             <div class="form-group">
                 <button onclick="return validateData()" type="submit" class="btn btn-primary">Sign up</button>
@@ -30,78 +55,132 @@
         </form>
     </div>
     <script>
-        function validateMobile(){
+        function validateProfile() {
+            var status = true;
+            var profilePic = document.querySelector("#profilePic");
+            var profileError = document.querySelector("#profileError");
+            if (profilePic.files.length != 0) {
+                var fileName = profilePic.files[0].name;
+                var lastIndex = fileName.lastIndexOf(".");
+                var fileExtension = fileName.slice(lastIndex);
+                if (fileExtension != '.jpg') {
+                    status = false;
+                    profileError.innerHTML = "profile pic required";
+                    profileError.style.color = "red";
+                }
+                else
+                    profileError.innerHTML = "";
+            }
+            else {
+                status = false;
+                profileError.innerHTML = "profile pic required";
+                profileError.style.color = "red";
+
+            }
+            return status;
+        }
+        function validateGender() {
+            var status = true;
+            var rdMale = document.querySelector("#rdMale").checked;
+            var rdFemale = document.querySelector("#rdFemale").checked;
+            var genderError = document.querySelector("#genderError");
+            if (rdMale == false && rdFemale == false) {
+                status = false;
+                genderError.innerHTML = "please select gender";
+                genderError.style.color = "red";
+            }
+            else
+                genderError.innerHTML = "";
+            return status;
+        }
+        function validateQualification() {
+            var status = true;
+            var qualification = document.querySelector("#qualification").value;
+            var qualificationError = document.querySelector("#qualificationError");
+            if (qualification == "0") {
+                status = false;
+                qualificationError.style.color = "red";
+                qualificationError.innerHTML = "please select qualification";
+            }
+            else
+                qualificationError.innerHTML = "";
+            return status;
+        }
+        function validateMobile() {
             var status = true;
             var mobile = document.getElementById("mobile").value;
             var mobileError = document.getElementById("mobileError");
-            if(mobile == ""){
+            if (mobile == "") {
                 status = false;
                 mobileError.innerHTML = "mobile is required";
                 mobileError.style.color = "red";
             }
-            else if(isNaN(mobile)){
+            else if (isNaN(mobile)) {
                 status = false;
                 mobileError.innerHTML = "only digit is allowed";
                 mobileError.style.colr = "red";
             }
-            else if(mobile.length != 10){
+            else if (mobile.length != 10) {
                 status = false;
                 mobileError.innerHTML = "invald mobile number(not contain 10 digit)";
                 mobileError.style.color = "red"
             }
             else
-              mobileError.innerHTML = "";
+                mobileError.innerHTML = "";
             return status;
         }
-        function showHide(currentObject){
-           var passwordObject = document.getElementById("password");
-           if(currentObject.innerText == "Show"){
-             passwordObject.type = "text";
-             currentObject.innerHTML = "Hide";
-           }  
-           else{
-            passwordObject.type = "password";
-            currentObject.innerHTML = "Show";
-           }
+        function showHide(currentObject) {
+            var passwordObject = document.getElementById("password");
+            if (currentObject.innerText == "Show") {
+                passwordObject.type = "text";
+                currentObject.innerHTML = "Hide";
+            }
+            else {
+                passwordObject.type = "password";
+                currentObject.innerHTML = "Show";
+            }
         }
-        function validatePassword(){
+        function validatePassword() {
             var status = true;
             var password = document.getElementById("password").value;
             var passwordError = document.getElementById("passwordError");
-            if(password == ""){
+            if (password == "") {
                 passwordError.innerHTML = "password is required..";
                 passwordError.style.color = "red";
                 status = false;
-            } 
-            else if(password.length < 6 || password.length>10){
+            }
+            else if (password.length < 6 || password.length > 10) {
                 passwordError.innerHTML = "password must be between 6 to 10 letter";
                 passwordError.style.color = "red";
                 status = false;
             }
             else
-              passwordError.innerHTML = "";
+                passwordError.innerHTML = "";
             return status;
         }
-        function validateUsername(){
-           var status = true; 
-           var username = document.getElementById("username").value;
-           var usernameError = document.getElementById("usernameError");
+        function validateUsername() {
+            var status = true;
+            var username = document.getElementById("username").value;
+            var usernameError = document.getElementById("usernameError");
 
-           if(username == ""){
-             usernameError.innerHTML = "please enter username";
-             usernameError.style.color = "red";
-             status = false;
-           }
-           else
-             usernameError.innerHTML = "";
-           return status;
+            if (username == "") {
+                usernameError.innerHTML = "please enter username";
+                usernameError.style.color = "red";
+                status = false;
+            }
+            else
+                usernameError.innerHTML = "";
+            return status;
         }
-        function validateData(){
-            var usernameStatus = validateUsername(); 
+        function validateData() {
+            var usernameStatus = validateUsername();
             var passwordStatus = validatePassword();
             var mobileStatus = validateMobile();
-            if(usernameStatus && passwordStatus && mobileStatus)
-              return true;
+            var qualificationStatus = validateQualification();
+            var genderStatus = validateGender();
+            var profileStatus = validateProfile();
+            if (usernameStatus && passwordStatus && mobileStatus && qualificationStatus && genderStatus && profileStatus)
+                return true;
             return false;
         }
     </script>
