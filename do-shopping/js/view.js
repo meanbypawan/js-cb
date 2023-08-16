@@ -30,16 +30,140 @@ function createNavigationBar(){
   searchInput.setAttribute("class","form-control");
   searchInput.setAttribute("placeholder","Search products");
   searchDiv.appendChild(searchInput);
+   
+  var righMenu = document.createElement("div");
+  righMenu.setAttribute("class","col-md-2 d-flex justify-content-around align-items-center");
+  righMenu.setAttribute("style","height:70px;margin-left:40px;font-size:20px;");
+  
+  var signInLink = document.createElement("a");
+  signInLink.setAttribute("href","#");
+  signInLink.innerText = "Sign in";
+  signInLink.setAttribute("style","color:white; text-decoration:none;");
+
+  var signUpLink = document.createElement("a");
+  signUpLink.setAttribute("href","#");
+  signUpLink.innerText = "Sign up";
+  signUpLink.setAttribute("style","color:white;text-decoration:none;");
+
+  righMenu.appendChild(signUpLink);
+  righMenu.appendChild(signInLink);
 
   parentNavDiv.appendChild(logoDiv);
   parentNavDiv.appendChild(searchDiv);
+  parentNavDiv.appendChild(righMenu);
   mainDiv.appendChild(parentNavDiv); 
+
+  signUpLink.addEventListener("click",function(){
+    var mainDiv = document.querySelector("#main");
+    mainDiv.innerHTML = "";
+    createNavigationBar();
+    createSignUpPage(mainDiv);
+  });
+
+  signInLink.addEventListener("click",function(){
+    var mainDiv = document.querySelector("#main");
+    mainDiv.innerHTML = "";
+    createNavigationBar();
+    createSignInPage(mainDiv);
+    
+  });
 }
+
+function createSignInPage(mainDiv){
+  //var mainDiv = document.querySelector("#main");
+  var div = document.createElement("div");
+  div.setAttribute("class","container mt-5 border");
+  div.setAttribute("style","width:30%; min-height:300px;padding:30px; margin-auto;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);");
+  
+  var inputDiv = document.createElement("div");
+  var usernameInput = document.createElement("input");
+  usernameInput.type = "text";
+  usernameInput.placeholder = "Enter username";
+  usernameInput.setAttribute("style","height:40px;width:100%;");
+  
+  var passwordInput = document.createElement("input");
+  passwordInput.type = "password";
+  passwordInput.placeholder = "Enter password";
+  passwordInput.setAttribute("style","height:40px;width:100%;margin-top:40px;");
+
+  var buttonInput = document.createElement("button");
+  buttonInput.setAttribute("class","btn");
+  buttonInput.innerText = "Sign in";
+  buttonInput.setAttribute("style","margin-top:40px;width:100%;background-color:black;color:white;");
+  
+  buttonInput.addEventListener("click",function(){
+     var user = usernameInput.value;
+     var pass = passwordInput.value;
+     var userList = localStorage.getItem("userList");
+     userList = JSON.parse(userList);
+     window.alert(user+"  "+pass);
+     window.alert(userList);
+     var status = userList.findIndex((user)=>user.username == user && user.password==pass);
+     window.alert(status);
+  });
+
+  inputDiv.appendChild(usernameInput);
+  inputDiv.appendChild(passwordInput);
+  inputDiv.appendChild(buttonInput);
+  div.appendChild(inputDiv);
+
+  mainDiv.appendChild(div);
+}
+
+
+
+function createSignUpPage(mainDiv){
+  //var mainDiv = document.querySelector("#main");
+  var div = document.createElement("div");
+  div.setAttribute("class","container mt-5 border");
+  div.setAttribute("style","width:30%; min-height:300px;padding:30px; margin-auto;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);");
+  
+  var inputDiv = document.createElement("div");
+  var usernameInput = document.createElement("input");
+  usernameInput.type = "text";
+  usernameInput.placeholder = "Enter username";
+  usernameInput.setAttribute("style","height:40px;width:100%;");
+  
+  var passwordInput = document.createElement("input");
+  passwordInput.type = "password";
+  passwordInput.placeholder = "Enter password";
+  passwordInput.setAttribute("style","height:40px;width:100%;margin-top:40px;");
+
+  var buttonInput = document.createElement("button");
+  buttonInput.setAttribute("class","btn");
+  buttonInput.innerText = "Sign up";
+  buttonInput.setAttribute("style","margin-top:40px;width:100%;background-color:black;color:white;");
+  
+  buttonInput.addEventListener("click",function(){
+     var user = usernameInput.value;
+     var pass = passwordInput.value;
+     
+     var userList = localStorage.getItem("userList");
+     userList = JSON.parse(userList);
+     if(user != "" && pass !=""){
+        var newUser = {username:user,password:pass};
+        userList.push(newUser);
+        localStorage.setItem("userList",JSON.stringify(userList));
+     }
+     else
+       window.alert("Please fill required details");
+  });
+
+  inputDiv.appendChild(usernameInput);
+  inputDiv.appendChild(passwordInput);
+  inputDiv.appendChild(buttonInput);
+  div.appendChild(inputDiv);
+
+  mainDiv.appendChild(div);
+}
+
+
 function createCart(){
   var mainDiv = document.querySelector("#main");
 
   var rowDiv = document.createElement("div");
   rowDiv.setAttribute("class","row mt-5");
+  rowDiv.setAttribute("id","cart-row");
   var data = localStorage.getItem("productList");
   data = JSON.parse(data);
   
