@@ -35,38 +35,54 @@ function createNavigationBar(){
   righMenu.setAttribute("class","col-md-2 d-flex justify-content-around align-items-center");
   righMenu.setAttribute("style","height:70px;margin-left:40px;font-size:20px;");
   
-  var signInLink = document.createElement("a");
-  signInLink.setAttribute("href","#");
-  signInLink.innerText = "Sign in";
-  signInLink.setAttribute("style","color:white; text-decoration:none;");
+  if(isLoggedIn()){
+    
+    var signOutLink = document.createElement("a");
+    signOutLink.setAttribute("href","#");
+    signOutLink.innerText = "Sign out";
+    signOutLink.setAttribute("style","color:white; text-decoration:none;");
+    righMenu.appendChild(signOutLink);
 
-  var signUpLink = document.createElement("a");
-  signUpLink.setAttribute("href","#");
-  signUpLink.innerText = "Sign up";
-  signUpLink.setAttribute("style","color:white;text-decoration:none;");
+    signOutLink.addEventListener("click",function(){
+      sessionStorage.clear();
+      window.location.reload();   
+    });
+  }
+  else{
+    var signInLink = document.createElement("a");
+    signInLink.setAttribute("href","#");
+    signInLink.innerText = "Sign in";
+    signInLink.setAttribute("style","color:white; text-decoration:none;");
 
-  righMenu.appendChild(signUpLink);
-  righMenu.appendChild(signInLink);
+    var signUpLink = document.createElement("a");
+    signUpLink.setAttribute("href","#");
+    signUpLink.innerText = "Sign up";
+    signUpLink.setAttribute("style","color:white;text-decoration:none;");
 
+    righMenu.appendChild(signUpLink);
+    righMenu.appendChild(signInLink);
+
+    signUpLink.addEventListener("click",function(){
+      var mainDiv = document.querySelector("#main");
+      mainDiv.innerHTML = "";
+      createNavigationBar();
+      createSignUpPage(mainDiv);
+    });
+  
+    signInLink.addEventListener("click",function(){
+      var mainDiv = document.querySelector("#main");
+      mainDiv.innerHTML = "";
+      createNavigationBar();
+      createSignInPage(mainDiv);
+      
+    });
+  }
   parentNavDiv.appendChild(logoDiv);
   parentNavDiv.appendChild(searchDiv);
   parentNavDiv.appendChild(righMenu);
   mainDiv.appendChild(parentNavDiv); 
 
-  signUpLink.addEventListener("click",function(){
-    var mainDiv = document.querySelector("#main");
-    mainDiv.innerHTML = "";
-    createNavigationBar();
-    createSignUpPage(mainDiv);
-  });
-
-  signInLink.addEventListener("click",function(){
-    var mainDiv = document.querySelector("#main");
-    mainDiv.innerHTML = "";
-    createNavigationBar();
-    createSignInPage(mainDiv);
-    
-  });
+  
 }
 
 function createSignInPage(mainDiv){
@@ -96,10 +112,23 @@ function createSignInPage(mainDiv){
      var pass = passwordInput.value;
      var userList = localStorage.getItem("userList");
      userList = JSON.parse(userList);
-     window.alert(user+"  "+pass);
-     window.alert(userList);
-     var status = userList.findIndex((user)=>user.username == user && user.password==pass);
-     window.alert(status);
+     var status = false;
+     for(var userObject of userList){
+      if(userObject.username == user && userObject.password == pass){
+        status = true;
+      
+        break;
+      }  
+     }
+     if(status){
+        //window.alert("Inside If");
+        //localStorage.setItem("isLoggedIn","true"); 
+        sessionStorage.setItem("isLoggedIn","true");
+        sessionStorage.setItem("currentUser",""+user);
+        mainDiv.innerHTML = "";
+        createNavigationBar();
+        createCart();
+     }
   });
 
   inputDiv.appendChild(usernameInput);
@@ -110,7 +139,9 @@ function createSignInPage(mainDiv){
   mainDiv.appendChild(div);
 }
 
-
+function isLoggedIn(){
+  return !!sessionStorage.getItem("isLoggedIn"); //"true"
+}
 
 function createSignUpPage(mainDiv){
   //var mainDiv = document.querySelector("#main");
@@ -194,7 +225,7 @@ function createCart(){
      h2.innerHTML = priceString;
      h2.setAttribute("class","text-center mt-1");
      
-     var p  =document.createElement("p");
+     var p = document.createElement("p");
      p.innerHTML = "View more";
      p.setAttribute("class","text-center");
      p.setAttribute("style","font-size:20px; font-weight:bold; cursor:pointer;");
@@ -203,6 +234,18 @@ function createCart(){
      button.innerHTML = "Add To Cart";
      button.setAttribute("class","btn btn-warning");
      button.setAttribute("style","width:90%; margin:auto;");  
+     button.addEventListener("click",function(){
+      if(isLoggedIn()){
+        var cartItemList = localStorage.getItem("cartItemList");
+        cartItemList = JSON.parse(cartItemList);
+        cartItemList.push(product);
+        localStorage.setItem("cartItemList",JSON.stringify(cartItemList));
+        window.alert("Product successfully added into cart");
+      }
+      else{
+        window.alert("Please sign in first");
+      }
+     });
      innerCartDiv.appendChild(img);
      innerCartDiv.appendChild(h4);
      innerCartDiv.appendChild(h2);
@@ -214,6 +257,7 @@ function createCart(){
   mainDiv.appendChild(rowDiv);
 }
 function uploadData(){
+  localStorage.setItem("cartItemList","[]");
   var data = getData();
   localStorage.setItem("productList",JSON.stringify(data));
 }
