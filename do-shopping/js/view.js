@@ -22,7 +22,7 @@ function createNavigationBar(){
   logoDiv.appendChild(labelText);
 
   var searchDiv = document.createElement("div");
-  searchDiv.setAttribute("class","col-md-6 d-flex align-items-center");
+  searchDiv.setAttribute("class","col-md-5 d-flex align-items-center");
   searchDiv.setAttribute("style","height:70px;");
   
   var searchInput = document.createElement("input");
@@ -32,11 +32,18 @@ function createNavigationBar(){
   searchDiv.appendChild(searchInput);
    
   var righMenu = document.createElement("div");
-  righMenu.setAttribute("class","col-md-2 d-flex justify-content-around align-items-center");
+  righMenu.setAttribute("class","col-md-3 d-flex justify-content-around align-items-center");
   righMenu.setAttribute("style","height:70px;margin-left:40px;font-size:20px;");
   
   if(isLoggedIn()){
     
+    var viewCartLink = document.createElement("a");
+    viewCartLink.setAttribute("href","#");
+    viewCartLink.innerText = "View cart";
+    viewCartLink.setAttribute("style","color:white;text-decoration:none;");
+  
+    righMenu.appendChild(viewCartLink);
+
     var signOutLink = document.createElement("a");
     signOutLink.setAttribute("href","#");
     signOutLink.innerText = "Sign out";
@@ -74,9 +81,11 @@ function createNavigationBar(){
       mainDiv.innerHTML = "";
       createNavigationBar();
       createSignInPage(mainDiv);
-      
     });
   }
+
+ 
+  
   parentNavDiv.appendChild(logoDiv);
   parentNavDiv.appendChild(searchDiv);
   parentNavDiv.appendChild(righMenu);
@@ -198,7 +207,7 @@ function createCart(){
   var data = localStorage.getItem("productList");
   data = JSON.parse(data);
   
-  for(var product of data){
+  for(var index in data){
      var cartDiv = document.createElement("div");
      cartDiv.setAttribute("class","col-md-4");
      cartDiv.setAttribute("style","padding:20px;");
@@ -207,20 +216,20 @@ function createCart(){
      innerCartDiv.setAttribute("style","height:500px; box-shadow: 10px 10px 10px grey");
      innerCartDiv.setAttribute("class","text-center");
      var img = document.createElement("img");
-     img.src = product.thumbnail;
+     img.src = data[index].thumbnail;
      img.setAttribute("style","width:100%; height:300px;");
      
      var h4 = document.createElement("h4");
-     h4.innerHTML = product.title.slice(0,30);
+     h4.innerHTML = data[index].title.slice(0,30);
      h4.setAttribute("class","text-center mt-2");
      
      var h2 = document.createElement("h2");
      var priceString = "";
-     if(product.discountPercentage){
-       priceString = `<del class='text-danger'>${product.price}</del> &nbsp;&nbsp;&nbsp;<span class="text-success">${" Rs. "+(product.price - ((product.price*product.discountPercentage)/100)).toFixed(2)}</span>`
+     if(data[index].discountPercentage){
+       priceString = `<del class='text-danger'>${data[index].price}</del> &nbsp;&nbsp;&nbsp;<span class="text-success">${" Rs. "+(data[index].price - ((data[index].price*data[index].discountPercentage)/100)).toFixed(2)}</span>`
      }
      else
-       priceString = `<span>${product.price}</span>`;
+       priceString = `<span>${data[index].price}</span>`;
     
      h2.innerHTML = priceString;
      h2.setAttribute("class","text-center mt-1");
@@ -234,18 +243,22 @@ function createCart(){
      button.innerHTML = "Add To Cart";
      button.setAttribute("class","btn btn-warning");
      button.setAttribute("style","width:90%; margin:auto;");  
-     button.addEventListener("click",function(){
-      if(isLoggedIn()){
-        var cartItemList = localStorage.getItem("cartItemList");
-        cartItemList = JSON.parse(cartItemList);
-        cartItemList.push(product);
-        localStorage.setItem("cartItemList",JSON.stringify(cartItemList));
-        window.alert("Product successfully added into cart");
-      }
-      else{
-        window.alert("Please sign in first");
-      }
-     });
+     //var test = product;
+     //console.log(test);
+     button.setAttribute("onclick","addToCart("+index+")");
+     //  button.addEventListener("click",async function(product){
+    //   if(isLoggedIn()){
+    //     var cartItemList = localStorage.getItem("cartItemList");
+    //     cartItemList = JSON.parse(cartItemList);
+    //     cartItemList.push(product);
+    //     console.log(cartItemList);
+    //     localStorage.setItem("cartItemList",JSON.stringify(cartItemList));
+    //     window.alert("Product successfully added into cart");
+    //   }
+    //   else{
+    //     window.alert("Please sign in first");
+    //   }
+    //  });
      innerCartDiv.appendChild(img);
      innerCartDiv.appendChild(h4);
      innerCartDiv.appendChild(h2);
@@ -256,6 +269,24 @@ function createCart(){
   }
   mainDiv.appendChild(rowDiv);
 }
+function addToCart(index){
+   var productList = localStorage.getItem("productList");
+   productList = JSON.parse(productList);
+   var product = productList[index];
+   product = {...product,qty:1};
+   var cartItemList = localStorage.getItem("cartItemList");
+   cartItemList = JSON.parse(cartItemList);
+   
+   var itemIndex = cartItemList.findIndex((item)=>{return item.id == product.id});
+   if(itemIndex==-1){
+    cartItemList.push(product);
+    localStorage.setItem("cartItemList",JSON.stringify(cartItemList));
+    window.alert("Item successfully added into cart");
+   }
+   else{
+     window.alert("Product is already added into cart");
+   }
+  }
 function uploadData(){
   localStorage.setItem("cartItemList","[]");
   var data = getData();
