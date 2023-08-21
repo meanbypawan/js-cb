@@ -13,7 +13,10 @@
 <body>
  <div id="main" class="container-fluid">   
    <script>   
-      localStorage.setItem("userList","[]");
+      var userList = localStorage.getItem("userList");
+      userList = JSON.parse(userList);
+      if(userList.length==0)
+        localStorage.setItem("userList","[]");
       uploadData();
       createNavigationBar();
       createCart();

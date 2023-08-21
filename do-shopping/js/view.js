@@ -41,7 +41,10 @@ function createNavigationBar(){
     viewCartLink.setAttribute("href","#");
     viewCartLink.innerText = "View cart";
     viewCartLink.setAttribute("style","color:white;text-decoration:none;");
-  
+    
+    viewCartLink.addEventListener("click",function(){
+       displayCart();
+    });
     righMenu.appendChild(viewCartLink);
 
     var signOutLink = document.createElement("a");
@@ -93,7 +96,136 @@ function createNavigationBar(){
 
   
 }
+function displayCart(){
+  var mainDiv = document.querySelector("#main");
+  mainDiv.innerHTML = "";
+  createNavigationBar();
 
+  var containerDiv = document.createElement("div");
+  containerDiv.setAttribute("class","container mt-5");
+  
+  var rowDiv = document.createElement("div");
+  rowDiv.setAttribute("class","row");
+
+  var leftColDiv = document.createElement("div");
+  leftColDiv.setAttribute("class","col-md-8 border");
+  
+  var table = document.createElement("table");
+  table.setAttribute("class","table");
+  var tr = document.createElement("tr");
+  var td = document.createElement("td");
+  td.innerText = "S.no";
+  tr.appendChild(td);
+  
+  td = document.createElement("td");
+  td.innerText = "Title";
+  tr.appendChild(td);
+
+  td = document.createElement("td");
+  td.innerText = "Brand";
+  tr.appendChild(td);
+
+  td = document.createElement("td");
+  td.innerText = "Price";
+  tr.appendChild(td);
+
+  td = document.createElement("td");
+  td.innerText = "Qty";
+  tr.appendChild(td);
+  table.appendChild(tr);
+  var cartItemList = localStorage.getItem("cartItemList");
+  cartItemList = JSON.parse(cartItemList);
+  for(var index in cartItemList){
+    var tr = document.createElement("tr");
+    var td = document.createElement("td");
+    td.innerText = ""+(index*1+1);
+    tr.appendChild(td);
+    
+    td = document.createElement("td");
+    td.innerText = cartItemList[index].title;
+    tr.appendChild(td);
+  
+    td = document.createElement("td");
+    td.innerText = cartItemList[index].brand;
+    tr.appendChild(td);
+  
+    td = document.createElement("td");
+    td.innerText = cartItemList[index].price;
+    tr.appendChild(td);
+  
+    td = document.createElement("td");
+    var qtyInput = document.createElement("input");
+    qtyInput.setAttribute("type","number");
+    qtyInput.setAttribute("id","qty"+index);
+    qtyInput.value = 1;
+    qtyInput.style.width = "40";
+    qtyInput.setAttribute("onchange","updateQty("+index+")");
+ 
+    td.appendChild(qtyInput);
+    tr.appendChild(td);
+    table.appendChild(tr);  
+  }
+  
+  leftColDiv.appendChild(table);
+
+  var rightColDiv = document.createElement("div");
+  rightColDiv.setAttribute("class","col-md-3 offset-1");
+ 
+  rightColDiv.style.boxShadow = "10px 10px 10px grey";
+  rightColDiv.style.height = "200px";
+
+  var h3 = document.createElement("h3");
+  h3.innerText = "Order summery";
+  h3.style.textAlign = "center";
+  
+  var labelDiv = document.createElement("div");
+  var totalItemLabel = document.createElement("label");
+  totalItemLabel.innerText = "Total Item : ";
+
+  var totalItemCountLabel = document.createElement("label");
+  totalItemCountLabel.innerText = ""+cartItemList.length;
+  totalItemCountLabel.style.marginLeft = "20px";
+  labelDiv.appendChild(totalItemLabel);
+  labelDiv.appendChild(totalItemCountLabel);
+
+  var priceDiv = document.createElement("div");
+  var priceH3 = document.createElement("h3");
+  priceH3.setAttribute("class","text-success");
+  priceH3.innerHTML = "Bill Amount : <label id='totalBill'>"+totalPrice()+"</label>";
+  priceDiv.appendChild(priceH3);
+
+  rightColDiv.appendChild(h3);
+  rightColDiv.appendChild(labelDiv);
+  rightColDiv.appendChild(priceDiv);
+  
+
+  rowDiv.appendChild(leftColDiv);
+  rowDiv.appendChild(rightColDiv);
+  
+  
+
+  containerDiv.appendChild(rowDiv);
+  mainDiv.appendChild(containerDiv);
+}
+function totalPrice(){
+  var cartItemList = localStorage.getItem("cartItemList");
+  cartItemList = JSON.parse(cartItemList);
+  var price  = 0;
+  for(var product of cartItemList)
+    price = price + product.price * product.qty;
+  
+  return price;
+}
+function updateQty(index){
+ // window.alert(qty);
+  var cartItemList = localStorage.getItem("cartItemList");
+  cartItemList = JSON.parse(cartItemList);
+  cartItemList[index].qty = document.getElementById("qty"+index).value;
+  localStorage.setItem("cartItemList",JSON.stringify(cartItemList));
+  var billAmount = totalPrice();
+  var totalBillLabel = document.querySelector("#totalBill");
+  totalBillLabel.innerHTML = ""+billAmount;
+}
 function createSignInPage(mainDiv){
   //var mainDiv = document.querySelector("#main");
   var div = document.createElement("div");
