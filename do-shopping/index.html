@@ -19,7 +19,10 @@
         localStorage.setItem("userList","[]");
       uploadData();
       createNavigationBar();
-      createCart();
+      var data = localStorage.getItem("productList");
+      data = JSON.parse(data);
+  
+      createCart(data);
    </script>
  </div>
  <div class="container d-none" id="checkout-model">

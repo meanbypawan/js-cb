@@ -29,6 +29,8 @@ function createNavigationBar(){
   searchInput.setAttribute("type","text");
   searchInput.setAttribute("class","form-control");
   searchInput.setAttribute("placeholder","Search products");
+  searchInput.setAttribute("id","search");
+  searchInput.setAttribute("onkeyup","searchProduct()");
   searchDiv.appendChild(searchInput);
    
   var righMenu = document.createElement("div");
@@ -95,6 +97,22 @@ function createNavigationBar(){
   mainDiv.appendChild(parentNavDiv); 
 
   
+}
+function searchProduct(){
+  var searchInput = document.querySelector("#search");
+  var keyword = searchInput.value;
+  var productList = localStorage.getItem("productList");
+  productList = JSON.parse(productList);
+
+  var searchResult = productList.filter((product)=>product.title.toLowerCase().includes(keyword.toLowerCase()));
+
+  var mainDiv = document.querySelector("#main");
+  mainDiv.innerHTML = "";
+  createNavigationBar();
+  document.querySelector("#search").value = keyword;
+  document.querySelector("#search").focus();
+  createCart(searchResult);
+
 }
 function displayCart(){
   var mainDiv = document.querySelector("#main");
@@ -279,7 +297,10 @@ function createSignInPage(mainDiv){
         sessionStorage.setItem("currentUser",""+user);
         mainDiv.innerHTML = "";
         createNavigationBar();
-        createCart();
+        var data = localStorage.getItem("productList");
+        data = JSON.parse(data);
+  
+        createCart(data);
      }
   });
 
@@ -341,14 +362,12 @@ function createSignUpPage(mainDiv){
 }
 
 
-function createCart(){
+function createCart(data){
   var mainDiv = document.querySelector("#main");
 
   var rowDiv = document.createElement("div");
   rowDiv.setAttribute("class","row mt-5");
   rowDiv.setAttribute("id","cart-row");
-  var data = localStorage.getItem("productList");
-  data = JSON.parse(data);
   
   for(var index in data){
      var cartDiv = document.createElement("div");
@@ -431,7 +450,8 @@ function addToCart(index){
    }
   }
 function uploadData(){
-  localStorage.setItem("cartItemList","[]");
+  if(localStorage.getItem("cartItemList") == undefined)
+    localStorage.setItem("cartItemList","[]");
   var data = getData();
   localStorage.setItem("productList",JSON.stringify(data));
 }
