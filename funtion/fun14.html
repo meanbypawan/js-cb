@@ -1,0 +1,26 @@
+<script>
+
+  var first = (value,callback)=>{
+    console.log("Inside First : "+value);
+    callback(value+2);
+  };
+  var second = (value,callback)=>{
+    console.log("Inside Second : "+value);
+    callback(value+2);
+  };
+  var third = (value,callback)=>{
+    console.log("Inside Third : "+value);
+    callback(value+2);
+  };
+  var fourth = (value)=>{
+    console.log("Inside Fourth : "+value);
+  };
+
+  first(10,(n)=>{
+    second(n,(val)=>{
+        third(val,(val)=>{
+            fourth(val);
+        });
+    });
+  });
+</script>

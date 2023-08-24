@@ -14,9 +14,11 @@
  <div id="main" class="container-fluid">   
    <script>   
       var userList = localStorage.getItem("userList");
-      userList = JSON.parse(userList);
-      if(userList.length==0)
+      
+      if(userList==undefined || userList.length==0){
+        userList = JSON.parse(userList);
         localStorage.setItem("userList","[]");
+      }
       uploadData();
       createNavigationBar();
       var data = localStorage.getItem("productList");

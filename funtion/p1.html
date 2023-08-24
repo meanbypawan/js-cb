@@ -1,0 +1,32 @@
+<script>
+    /*
+      class Promise(){
+        constructor(para){}
+        then(){
+            return promise;
+        }
+        catch(){
+            return promise;
+        }
+      }
+      Promise :- Promise is used to handle multiple asyncronous operation
+      easily. Prior to promise callback were used but it leads to unmanageble code.
+
+      Promise is a object which has four possible state
+       1. Pending
+       2. Resolved/Fullfilled
+       3. Reject
+       4. Setteled
+
+    */
+    var p = new Promise((resolve,reject)=>{ // resolve(), reject()
+        resolve();
+        //reject();
+    });
+
+    p.then(()=>{
+        console.log("Promise is resolved.....then callbacked is triggered");
+    }).catch(()=>{
+        console.log("Promise is rejected.....catch callback is triggered");
+    });
+</script>
