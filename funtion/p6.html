@@ -1,0 +1,37 @@
+<script>
+    var first = (value)=>{
+        console.log("Inside First");
+        return new Promise((resolve,reject)=>{
+            resolve(value+2);
+        })
+    };
+    var second = (value)=>{
+        console.log("Inside Second");
+        return new Promise((resolve,reject)=>{
+            resolve(value+2);
+        })
+    };
+    var third = (value)=>{
+        console.log("Inside Third");
+        return new Promise((resolve,reject)=>{
+            resolve(value+2);
+        })
+    };
+    var fourth = (value)=>{
+        console.log("Inside Fourth");
+        return new Promise((resolve,reject)=>{
+            resolve(value+2);
+        })
+    };
+
+    first(10).then(result=>{
+        console.log(result);
+        return second(result);
+    }).then(result=>{
+        console.log(result);
+       return third(result);
+    }).then(result=>{
+        console.log(result);
+        return fourth(result);
+    }).then(result=>{console.log(result)});
+</script>
