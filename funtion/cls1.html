@@ -1,0 +1,15 @@
+<script>
+    // closure :- These are the functions bundled together 
+    // A closure is a feature of JavaScript that allows inner functions to 
+    //access the outer scope of a function.
+    function outer(){
+       var x = 100;
+       function inner(){
+         console.log("x : "+x);
+       }
+
+       inner();
+    }
+
+    outer();
+</script>

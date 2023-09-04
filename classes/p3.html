@@ -1,0 +1,26 @@
+<script>
+    /*
+      Airthmetic : property : a,b
+                   behviour : add(), sub()
+   */
+
+  class Airthmetic{
+    constructor(a,b){
+        this.a = a;
+        this.b = b;
+    }
+
+    add(){
+        document.write("<br/>Addition : "+(this.a+this.b));
+    }
+
+    sub(){
+        document.write("<br/>Subtraction : "+(this.a - this.b));
+    }
+  }
+
+  var obj = new Airthmetic(20,10); // obj-> a:20, b:10
+  obj.add();
+  obj.sub();
+
+</script>

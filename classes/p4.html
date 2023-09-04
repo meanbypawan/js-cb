@@ -1,0 +1,44 @@
+<script>
+    /*
+     SJ5------>property :- title,price
+               behaviour :- receivingCall(), rejectingCall()
+
+     SJ7 ----> behaviour:- receivingCall(), rejectingCall(), camera()          
+        
+     Inheritance :-
+        When object of a one class acquire the properties of another object 
+    
+        By using existing thing , to develop something new but
+        there sould not be any changes in existing thing
+    */
+   class SJ5{
+    constructor(title,price){
+        this.title = title;
+        this.price = price;
+    }
+    receivingCall(){
+        document.write("<br/>Call Recevied...");
+    }
+    rejectingCall(){
+        document.write("<br/>Call Rejected...");
+    }
+    showInfo(){
+        document.write("<br/>Title : "+this.title+"<br/>  Price : "+this.price);
+    }
+   }
+
+  class SJ7 extends SJ5{
+    constructor(title,price){
+        super(title,price);
+    }
+    camera(){
+        document.write("<br/> Photo Clicked...");
+    }
+  }
+
+  var j7 = new SJ7("Samsung J7",20000);
+  j7.receivingCall();
+  j7.rejectingCall();
+  j7.showInfo();
+  j7.camera();
+</script>

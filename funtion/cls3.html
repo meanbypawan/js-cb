@@ -1,0 +1,12 @@
+<script>
+    function f1(l){
+        return function f2(w){
+            return function f3(h){
+              return l * w * h;
+            }
+        }
+    }
+
+    var result = f1(2)(3)(4);
+    document.write("Result : "+result);
+</script>

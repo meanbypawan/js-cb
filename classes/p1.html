@@ -1,0 +1,38 @@
+<script>
+    /*
+       Cusomter :- id,name,age,mobile
+       //  display()
+
+       var customer = {id:100, name:'ABC',age:25,mobile:90090,displaty:fuction(){}}
+   */
+   /*
+       function Customer(id,name,age,mobile){
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.mobile = mobile;
+        this.display = function(){
+            console.log(this.id+"  "+this.name+"  "+this.age);
+        }
+       }
+
+       var customer = new Customer(100,"ABC",24,9099122);
+       customer.display();
+    */
+   class Customer{
+      constructor(id,name,age,mobile){
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.mobile = mobile;
+      }
+      display(){
+        document.write("<br>Id : "+this.id);
+        document.write("<br>Name : "+this.name);
+        document.write("<br>Age : "+this.age);
+        document.write("<br>Mobile : "+this.mobile);
+      }
+   }
+   var customer = new Customer(100,"ABC",24,"9009111222");
+   customer.display();
+</script>

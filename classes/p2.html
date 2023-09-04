@@ -1,0 +1,19 @@
+<script>
+    class Message{
+        m1(){
+          document.write("M1-executed...<br>");  
+        }
+        m2(){
+            document.write("M2-executed...<br>");
+        }
+
+        static m3(){
+            document.write("M2-executed...<br>");
+        }
+    }
+
+    var obj = new Message();
+    obj.m1();
+    obj.m2();
+    Message.m3();
+</script>
