@@ -1,0 +1,59 @@
+ReactJS :- 
+Why :- It is used to develop Single Page Application
+  ReactJs V/s Angular
+
+What :- ReactJs is Javascript Library
+
+ReactJS :-
+  It is Library
+  Primary language is Javascript
+  ReactJs uses Virtual Dom Concept
+
+Angular
+  It is Framework
+  primary language is TypeScript (TS = JS Es5 + ES6.)
+  It Works on actual DOM
+
+ ReactJS :-
+   To Develope Single Page Application
+   
+   Single Page Application use component based architecture.
+
+   Component :- It is part of UI or portion of UI 
+
+   Two type of component in React
+     a. class component :- statefull component 
+
+     b. funtional compoennt :- stateless component ((Before 16))
+         
+        Hooks(Funtions) 
+        Function component + hooks = statefull component
+         Hooks :-
+           useState
+           useReducer
+           useLocation
+           useNavigate
+           useEffect
+           useMemo
+           useCallback
+           useContext
+           ...............
+
+ How to create React Application
+ ----------------------------------
+ nodejs
+ npm :- Node Package Manager
+ npm install axios
+ npm install redux
+
+ Spread Operation
+ Object Destructoring
+ Function
+ Promise
+ callback
+ array (Array Metod :- push, splice)
+ cloning ([...a], {...a})
+ class
+ ------------
+ try-catch
+ asyn-await 
