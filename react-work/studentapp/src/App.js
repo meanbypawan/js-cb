@@ -6,7 +6,10 @@ class App extends Component {
     super();
     this.state = {
       studentList: studentData,
-      brancList:["CS","IT","EC"]
+      brancList:["CS","IT","EC"],
+      branch: null,
+      addButtonStatus: true,
+      rollError: ""
     }
   }
   addRecord = ()=>{
@@ -24,6 +27,16 @@ class App extends Component {
       this.setState({studentList: [...this.state.studentList]});
     }
   }
+  checkRollExist = ()=>{
+    let roll = this.roll.value;
+    let index = this.state.studentList.findIndex((student)=>student.roll == roll); 
+    if(index != -1){
+      this.setState({rollError: "Roll number already exists"});
+    }
+    else{
+      this.setState({rollError: "",addButtonStatus:false});
+    }
+  }
   render() {
     return <div className="container-fluid">
       <header>
@@ -34,7 +47,8 @@ class App extends Component {
           <div className="col-md-6">
             <div className="form-group">
               <label>Roll</label>
-              <input type="text" ref={(rollObject)=>this.roll=rollObject} className="form-control" />
+              <input onBlur={this.checkRollExist} type="text" ref={(rollObject)=>this.roll=rollObject} className="form-control" />
+              <small className="text-danger">{this.state.rollError}</small>
             </div>
           </div>
           <div className="col-md-6">
@@ -61,8 +75,14 @@ class App extends Component {
           </div>
         </div>
         <div className="row mb-3">
-          <div className="col">
-            <button onClick={this.addRecord} className="btn btn-success">ADD</button>
+          <div className="col-md-6">
+            <button disabled={this.state.addButtonStatus} onClick={this.addRecord} className="btn btn-success">ADD</button>
+          </div>
+          <div className="col-md-6">
+            <button onClick={()=>this.setState({branch: "EC"})} className="btn btn-primary">EC ({this.state.studentList.filter((student)=>student.branch=="EC").length})</button>
+            <button onClick={()=>this.setState({branch:"CS"})} className="btn btn-success ml-2">CS ({this.state.studentList.filter((student)=>student.branch=="CS").length})</button>
+            <button onClick={()=>this.setState({branch:"IT"})} className="btn btn-warning ml-2">IT ({this.state.studentList.filter((student)=>student.branch=="IT").length})</button>
+            <button onClick={()=>this.setState({branch:null})} className="btn btn-info ml-2">Total ({this.state.studentList.length})</button>
           </div>
         </div>
         <table className="table">
@@ -76,7 +96,7 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.studentList.map((student, index) => <tr>
+            {this.state.studentList.filter((student)=>this.state.branch == null || student.branch==this.state.branch).map((student, index) => <tr>
               <td>{student.roll}</td>
               <td>{student.name}</td>
               <td>{student.branch}</td>
