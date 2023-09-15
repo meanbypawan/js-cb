@@ -23,6 +23,22 @@ class App extends Component {
       let newTask = {title,pid,date,status};
       this.setState({taskList: [...this.state.taskList,newTask]})
   }
+  changeTaskStatus = (task,taskStatus)=>{
+     let index = this.state.taskList.findIndex((taskObject)=>taskObject.title == task.title);
+     
+     let taskElement = this.state.taskList[index];
+
+     this.state.taskList.splice(index,1);
+
+     taskElement.status = taskStatus;
+
+     this.state.taskList.splice(index,0,taskElement);
+
+     this.setState({taskList:[...this.state.taskList]});
+
+
+
+  }
   render() {
     return <div>
       <section>To Do App</section>
@@ -46,8 +62,9 @@ class App extends Component {
         <div className="row mt-2 mb-5">
           <div className="col-12">
             <button onClick={this.addTask} className="btn btn-success">ADD</button>
-            <button className="btn btn-danger ml-4">Active ({this.state.taskList.filter((task)=>task.status=="Active").length})</button>
-            <button className="btn btn-warning ml-4">Deactive ({this.state.taskList.filter((task)=>task.status=="Deactive").length})</button>
+            <button onClick={()=>this.setState({defaultTaskStatus: "Active"})} disabled={this.state.defaultTaskStatus=="Active"?true:false} className="btn btn-danger ml-4">Active ({this.state.taskList.filter((task)=>task.status=="Active").length})</button>
+
+            <button onClick={()=>this.setState({defaultTaskStatus: "Deactive"})} disabled={this.state.defaultTaskStatus=="Deactive"?true:false} className="btn btn-warning ml-4">Deactive ({this.state.taskList.filter((task)=>task.status=="Deactive").length})</button>
           </div>
         </div>
       </div>
@@ -63,13 +80,13 @@ class App extends Component {
         </thead>
         <tbody>
 
-          {this.state.taskList.sort((a, b) => { return a.pid - b.pid }).map((task, index) => <tr style={{ backgroundColor: task.pid == 1 ? "mediumseagreen" : task.pid == 2 ? "orange" : "#db8282" }}>
+          {this.state.taskList.sort((a, b) => { return a.pid - b.pid }).filter((task)=>task.status==this.state.defaultTaskStatus).map((task, index) => <tr style={{ backgroundColor: task.pid == 1 ? "mediumseagreen" : task.pid == 2 ? "orange" : "#db8282" }}>
             <td>{index + 1}</td>
             <td>{task.title}</td>
             <td>{task.date}</td>
             <td>{this.state.prioryList.find((priorityObj) => priorityObj.priorityId == task.pid).priorityValue}</td>
             <td>
-              {this.state.defaultTaskStatus=="Active"?<button className="btn btn-outline-primary">Deactive</button> : <button className="btn btn-outline-primary">Active</button>}
+              {this.state.defaultTaskStatus=="Active"?<button className="btn btn-outline-primary" onClick={()=>this.changeTaskStatus(task,"Deactive")}>Deactive</button> : <button className="btn btn-outline-primary" onClick={()=>this.changeTaskStatus(task,"Active")}>Active</button>}
             </td>
           </tr>)}
         </tbody>
