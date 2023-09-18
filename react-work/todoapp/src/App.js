@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import './App.css';
 import taskData from './Data.js';
+import TaskList from './components/TaskList';
+import AddNewTask from './components/AddNewTask';
+import Header from './components/Header';
 class App extends Component {
   constructor() {
     super();
@@ -14,14 +17,8 @@ class App extends Component {
       defaultTaskStatus: "Active"
     };
   }
-  addTask = ()=>{
-      let title = this.title.value;
-      let pid = this.priority.value;
-      let date = new Date();
-      date = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
-      let status = "Active";
-      let newTask = {title,pid,date,status};
-      this.setState({taskList: [...this.state.taskList,newTask]})
+  updateTaskList = (taskList)=>{
+     this.setState({taskList: taskList})
   }
   changeTaskStatus = (task,taskStatus)=>{
      let index = this.state.taskList.findIndex((taskObject)=>taskObject.title == task.title);
@@ -39,58 +36,16 @@ class App extends Component {
 
 
   }
+  changeDefaultTaskStatus = (status)=>{
+    this.setState({defaultTaskStatus: status});
+  }
   render() {
     return <div>
-      <section>To Do App</section>
-      <div className="container-fluid mt-5">
-        <div className="row">
-          <div className="col-md-6">
-            <div className="form-group">
-              <label>Task Title</label>
-              <input ref={(titleObj)=>this.title=titleObj} type="text" className="form-control" />
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group">
-              <label>Task Priority</label>
-              <select ref={(taskPriorityObj)=>this.priority=taskPriorityObj} className="form-control">
-                {this.state.prioryList.map((priorityObj, index) => <option value={priorityObj.priorityId}>{priorityObj.priorityValue}</option>)}
-              </select>
-            </div>
-          </div>
-        </div>
-        <div className="row mt-2 mb-5">
-          <div className="col-12">
-            <button onClick={this.addTask} className="btn btn-success">ADD</button>
-            <button onClick={()=>this.setState({defaultTaskStatus: "Active"})} disabled={this.state.defaultTaskStatus=="Active"?true:false} className="btn btn-danger ml-4">Active ({this.state.taskList.filter((task)=>task.status=="Active").length})</button>
+      <Header/>
+      
+      <AddNewTask taskList={this.state.taskList} prioryList={this.state.prioryList} defaultTaskStatus={this.state.defaultTaskStatus} changeDefaultTaskStatus={this.changeDefaultTaskStatus} addTask={this.addTask} updateTaskList={this.updateTaskList}/>
 
-            <button onClick={()=>this.setState({defaultTaskStatus: "Deactive"})} disabled={this.state.defaultTaskStatus=="Deactive"?true:false} className="btn btn-warning ml-4">Deactive ({this.state.taskList.filter((task)=>task.status=="Deactive").length})</button>
-          </div>
-        </div>
-      </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>S.no</th>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Priority</th>
-            <th>Change status</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          {this.state.taskList.sort((a, b) => { return a.pid - b.pid }).filter((task)=>task.status==this.state.defaultTaskStatus).map((task, index) => <tr style={{ backgroundColor: task.pid == 1 ? "mediumseagreen" : task.pid == 2 ? "orange" : "#db8282" }}>
-            <td>{index + 1}</td>
-            <td>{task.title}</td>
-            <td>{task.date}</td>
-            <td>{this.state.prioryList.find((priorityObj) => priorityObj.priorityId == task.pid).priorityValue}</td>
-            <td>
-              {this.state.defaultTaskStatus=="Active"?<button className="btn btn-outline-primary" onClick={()=>this.changeTaskStatus(task,"Deactive")}>Deactive</button> : <button className="btn btn-outline-primary" onClick={()=>this.changeTaskStatus(task,"Active")}>Active</button>}
-            </td>
-          </tr>)}
-        </tbody>
-      </table>
+      <TaskList taskList={this.state.taskList} priorityList={this.state.prioryList} defaultTaskStatus={this.state.defaultTaskStatus} changeTaskStatus={this.changeTaskStatus}/>
     </div>
   }
 }
